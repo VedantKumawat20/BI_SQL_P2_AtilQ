@@ -95,7 +95,6 @@ However, for simplicity and project scope, the existing MySQL database will be u
 
 
 
-
 ✅ ETL Project Summary – AtilQ Sales Data Analysis (via Power BI & SQL)
 
 📊 Primary Analysis Goals
@@ -103,6 +102,8 @@ However, for simplicity and project scope, the existing MySQL database will be u
 •	Normalize sales across currencies (USD to INR).
 •	Enable quick filtering by year, market, and currency.
 •	Eliminate duplicate or invalid records for accurate KPIs.
+
+
 
 
 📥 Data Loading
@@ -113,56 +114,95 @@ o	transactions (150,283 records)
 o	customers (38 records)
 ________________________________________
 🧼 Data Cleaning
+
 1.	Removing Invalid Sales Amounts
-o	SQL Check: SELECT * FROM transactions WHERE sales_amount <= 0
-o	In Power BI: Filtered out rows where sales_amount is -1 or 0
-powerquery
-= Table.SelectRows(sales_transactions, each ([sales_amount] <> -1 and [sales_amount] <> 0))
-2.	Currency Field Clean-up
-o	Problem: Duplicate currencies with extra characters like 'INR\r', 'USD\r', 'USD', 'INR'
+
 o	SQL Check:
-sql
-SELECT DISTINCT currency FROM transactions;
-	'INR' → 279 (bad/extra)
-	'INR\r' → 150,000+ (valid)
-	'USD' → 2
-	'USD\r' → 2 (valid)
-o	Fix in Power BI: Retain only valid formats
+
+```sql 
+SELECT
+ *
+FROM transactions
+WHERE sales_amount <= 0
+```
+
+o	In Power BI: Filtered out rows where sales_amount is -1 or 0
+
 powerquery
+```vb
+= Table.SelectRows(sales_transactions, each ([sales_amount] <> -1 and [sales_amount] <> 0))
+```
+
+2.	Currency Field Clean-up
+
+o	Problem: Duplicate currencies with extra characters like 'INR\r', 'USD\r', 'USD', 'INR'
+
+o	SQL Check:
+
+```sql
+SELECT DISTINCT currency FROM transactions;
+```
+
+	'INR' → 279 (bad/extra)
+
+	'INR\r' → 150,000+ (valid)
+
+	'USD' → 2
+
+	'USD\r' → 2 (valid)
+
+o	Fix in Power BI: Retain only valid formats
+
+powerquery
+```vb
 = Table.SelectRows(#"Previous Step", each ([currency] = "INR#(cr)" or [currency] = "USD#(cr)"))
+```
+
 3.	Removing Blank Zones
+
 o	In sales_markets table, removed rows with blank zone values (e.g., New York, Paris)
+
 ________________________________________
 🛠 Data Preparation
 •	Joined transactions with date table to extract year-wise insights
-sql
+```sql
 SELECT *
 FROM transactions tr
 JOIN date da ON tr.order_date = da.date
+```
+
 •	Created custom column for currency normalization:
 o	If currency = USD → multiply sales_amount by 75
+
 powerquery
+```vb
 = Table.AddColumn(#"cleanup currency", "normalise_sales_amount", each if [currency] = "USD#(cr)" then [sales_amount]*75 else [sales_amount])
+```
+
 ________________________________________
 🔍 Data Inspection
 •	Counted records to verify table size:
-sql
+```sql
 SELECT COUNT(*) FROM transactions;        -- 150,283
 SELECT COUNT(*) FROM customers;           -- 38
 SELECT COUNT(*) FROM customers WHERE market_code = "Mark001";  -- 1035
 SELECT COUNT(*) FROM transactions WHERE currency = "USD";      -- 2
+```
 •	Verified sales amount for Chennai (Mark001) in 2020:
-sql
+```sql
 SELECT SUM(tr.sales_amount)
 FROM transactions tr
 JOIN sales.date da ON tr.order_date = da.date
 WHERE da.year = 2020 AND tr.market_code = "Mark001"
 -- Result: 2,463,024
+```
 ________________________________________
 🧾 Data Formatting
 •	Created a star schema by establishing relationships manually between tables (Data Modeling).
 •	Used Power BI's Applied Steps feature in Power Query to track and manage transformation logic.
 •	Ensured that formatting and data types were consistent (e.g., cleaned currency field for consistency).
+
+
 
 
 
@@ -219,9 +259,12 @@ remove or exclude recordes to do analysis
 ### 9. References-
 
 ### 10.	Data Structure Overview-
-EER Diagram
+ERD  Entity Relationship Diagram
 <br>
  data structure as seen below consists of four tables: sales, customers, products, and city with a total row count of …
+![Screenshot (119)](https://github.com/user-attachments/assets/4504fea6-31ba-4053-b256-152bb77e8438)
+
+
 
 (Prior to begnning the analysis, a variety of checks were conducted for quality control and famaliarization with the dataset. The SQL quaries utilized to instep and perform quality check can be found here.)
 
