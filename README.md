@@ -65,10 +65,13 @@ A fully automated sales dashboard delivering real-time, actionable insights, emp
 
 
 ### 4. Project Team & Technical Setup
+
 1. IT Team – "Falcons"
 The IT team, known as Falcons, manages the existing Sales Management System, which includes responsibilities like printing invoices and maintaining the MySQL database that stores all transactional sales data.
+
 2. Data Analyst Team – "Data Masters"
 The Data Masters team, responsible for generating insights, aims to use the existing MySQL database as a data source in a Business Intelligence (BI) tool, such as Power BI, to create dynamic dashboards.
+
 3. Data Warehouse Consideration
 Typically, to prevent BI queries from putting load on the MySQL OLTP (Online Transaction Processing) system, a data warehouse would be created. This would involve extracting data from MySQL, transforming it, and loading it into a separate system optimized for reporting and analytics.
 However, for simplicity and project scope, the existing MySQL database will be used directly, without setting up a separate data warehouse. Data will be accessed from MySQL with caution to ensure the live transactional system remains unaffected.
@@ -107,11 +110,23 @@ However, for simplicity and project scope, the existing MySQL database will be u
 
 
 📥 Data Loading
-•	Loaded all relevant tables (e.g., transactions, customers, sales_markets, date) into Power BI using MySQL as the data source.
+
+•	Loaded all relevant tables into Power BI using MySQL as the data source.
+
 •	Used Power Query Editor for data transformation and cleaning.
+
 •	Tables include:
+
+<br>
 o	transactions (150,283 records)
+<br>
 o	customers (38 records)
+<br>
+o markets (17 records)
+<br>
+o products (279 records)
+<br>
+o date (1129 records)
 ________________________________________
 🧼 Data Cleaning
 
@@ -142,6 +157,12 @@ o	SQL Check:
 ```sql
 SELECT DISTINCT currency FROM transactions;
 ```
+```sql
+SELECT
+COUNT(currency)
+FROM transactions
+WHERE currency = 'USD' 
+```
 
 	'INR' → 279 (bad/extra)
 
@@ -171,12 +192,12 @@ FROM transactions tr
 JOIN date da ON tr.order_date = da.date
 ```
 
-•	Created custom column for currency normalization:
+•	Created custom column (norma_sales_amount) for currency normalization:
 o	If currency = USD → multiply sales_amount by 75
 
 powerquery
 ```vb
-= Table.AddColumn(#"cleanup currency", "normalise_sales_amount", each if [currency] = "USD#(cr)" then [sales_amount]*75 else [sales_amount])
+= Table.AddColumn(#"cleanup currency", "norma_sales_amount", each if [currency] = "USD#(cr)" then [sales_amount]*75 else [sales_amount])
 ```
 
 ________________________________________
@@ -253,10 +274,6 @@ remove or exclude recordes to do analysis
 •  Data warehouse not implemented; data pulled directly from live OLTP (MySQL), which may affect performance under load.
 •  Bad records were removed instead of corrected due to scope and simplicity constraints.
 •  Static USD conversion rate used (₹75); dynamic rate API not integrated.
-
-
-
-### 9. References-
 
 ### 10.	Data Structure Overview-
 ERD  Entity Relationship Diagram
