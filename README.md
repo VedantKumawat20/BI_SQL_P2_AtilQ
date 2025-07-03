@@ -4,16 +4,16 @@
 https://github.com/VedantKumawat20/BI_SQL_P2_AtilQ/blob/main/BI_Dashboard.pbit
 
 ### Table of Contents
-[Background and Overview](#1.background-and-overview-)<br>
-[Problem Statement](#2.problem-statement-)<br>
-[AIMS Grid](#3.aims-grid–sales-insights-automation-project-for-atilQ-)<br>
-[Project Team & Technical Setup](#4.project-team--technical-setup-)<br>
-[Data Sources](#5.data-sources-)<br>
-[Tools](#6.tools-)<br>
-[ELT](#7.etl-extract-load-transform-)<br>
-[Data Structure Overview](#8.data-structure-overview-)<br>
-[Limitations](#9.limitations-)<br>
-[Executive Summary](#10.executive-summary–summary-about-main-findings-bi-)<br>
+[Background and Overview](#1-background-and-overview-)<br>
+[Problem Statement](#2-problem-statement-)<br>
+[AIMS Grid](#3-aims-grid–sales-insights-automation-project-for-atilQ-)<br>
+[Project Team & Technical Setup](#4-project-team--technical-setup-)<br>
+[Data Sources](#5-data-sources-)<br>
+[Tools](#6-tools-)<br>
+[ELT](#7-etl-extract-load-transform-)<br>
+[Data Structure Overview](#8-data-structure-overview-)<br>
+[Limitations](#9-limitations-)<br>
+[Executive Summary](#10-executive-summary–summary-about-main-findings-bi-)<br>
 
 ---
 ### 1. Background and Overview- 
