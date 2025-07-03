@@ -1,17 +1,7 @@
 # BI_SQL_P2_AtilQ
-Data Analysis Project 2  (Power BI) (SQL)
+### Data Analysis Project 2  (Power BI) (SQL)
 
-## sales_inghts_data_analysis
-
-GitHub Guide – 
-
-# SQL_P2_sales_insights_data_analysis
-## Data Analysis Project 2 (Analysis – SQL, Power BI)
-This study uses SQL and Power BI to…
-<br>
-The goal is to predict which….
-
-### . Table of Contents
+### Table of Contents
 [Background and Overview](#1.Background-and-Overview-)
 
 ### 1. Background and Overview- 
@@ -22,32 +12,23 @@ AtilQ, computer hardware & peripheral Manufacturer, has headquarter in delhi, an
 The company has significant amounts of data on its product offerings, market reach, customer details, and transaction history. This project throughly analyzes and synthesizes this data in order to uncover critical insights that will help AtilQ to solve computer hardware manufactruer sales issue.
 This project aims to thoroughly analyze and synthesize data to uncover key insights, which will support AtilQ in addressing its sales challenges within the computer hardware manufacturing sector.
 
-
-
-
 #### Overview--
 ##### Insights and recommendations are provided on the following key areas:
-
 ##### Sales Trends Analysis: 
-
 ##### Product level performance:
-
 ##### Regional Comparisons:
-
-________________________________________
 
 #### Objective--
 The goal of this project is to analyze the sales data of Monday Coffee, and to recommend the top three major cities in India for opening new coffee shop locations based on consumer demand and sales performance.
 
 
-
 ### 2. Problem Statement--
 The company operates in a dynamic and rapidly changing market, with sales teams spread across North, South, and Central India. Currently, the process of obtaining sales insights is inefficient and unreliable. Regional managers provide verbal updates when contacted, which often leads to inconsistent, sugar-coated, or misleading information, preventing leadership from getting a true picture of market performance.
+<br>
 Although sales data is shared in Excel files, they are often large, unstructured, and difficult to interpret, making it challenging for decision-makers to extract clear, actionable insights. As a result, there is a lack of real-time, transparent, and easy-to-understand sales reporting, hindering timely and informed strategic decisions.
 
-
 ### 3. AIMS Grid – Sales Insights Automation Project for AtilQ--
-4 Components-
+#### 4 Components-
 #### Purpose:
 The primary goal of this project is to unlock previously hidden sales insights for the sales team, enabling better and faster decision-making. By automating data consolidation and analysis, the project aims to significantly reduce the manual effort spent on gathering and preparing sales data.
 #### Stakeholders:
@@ -60,10 +41,12 @@ The primary goal of this project is to unlock previously hidden sales insights f
 A fully automated sales dashboard delivering real-time, actionable insights, empowering stakeholders to make informed, data-driven decisions with minimal delay.
 #### Success Criteria:
 •	✅ Reduction in manual effort and associated costs related to data gathering
+<br>
 •	✅ Dashboards delivering up-to-date sales order insights and performance metrics
+<br>
 •	✅ Sales team empowered to make more effective decisions, achieving a 10% cost saving on overall spend
+<br>
 •	✅ Sales analysts save 20% of their time by eliminating manual data tasks and redirect it to higher-value strategic activities
-
 
 ### 4. Project Team & Technical Setup
 
@@ -89,6 +72,7 @@ However, for simplicity and project scope, the existing MySQL database will be u
 
 ### 3. Tools-
 •	Power BI – Used for ETL, data modeling, transformation, visualization, and dashboard creation.
+<br>
 •	MySQL Workbench – Used to inspect, clean, and validate data before loading into Power BI.
 
 ### 4. Data Cleaning/Preparation-
@@ -97,40 +81,33 @@ However, for simplicity and project scope, the existing MySQL database will be u
 - Data cleaning and formating.
 
 
-
-
 ✅ ETL Project Summary – AtilQ Sales Data Analysis (via Power BI & SQL)
 
-📊 Primary Analysis Goals
+#### 📊 Primary Analysis Goals
 •	Generate automated dashboards with up-to-date insights.
+<br>
 •	Normalize sales across currencies (USD to INR).
+<br>
 •	Enable quick filtering by year, market, and currency.
+<br>
 •	Eliminate duplicate or invalid records for accurate KPIs.
 
 
-
-
-📥 Data Loading
-
+#### 📥 Data Loading
 •	Loaded all relevant tables into Power BI using MySQL as the data source.
-
+<br>
 •	Used Power Query Editor for data transformation and cleaning.
-
+<br>
 •	Tables include:
 
-<br>
-o	transactions (150,283 records)
-<br>
-o	customers (38 records)
-<br>
-o markets (17 records)
-<br>
-o products (279 records)
-<br>
-o date (1129 records)
+- transactions (150,283 records)
+- customers (38 records)
+- markets (17 records)
+- products (279 records)
+- date (1129 records)
 
 ________________________________________
-🧼 Data Cleaning
+#### 🧼 Data Cleaning
 
 1.	Removing Invalid Sales Amounts
 
@@ -186,7 +163,8 @@ powerquery
 o	In sales_markets table, removed rows with blank zone values (e.g., New York, Paris)
 
 ________________________________________
-🛠 Data Preparation
+#### 🛠 Data Preparation
+
 •	Joined transactions with date table to extract year-wise insights
 ```sql
 SELECT *
@@ -203,7 +181,7 @@ powerquery
 ```
 
 ________________________________________
-🔍 Data Inspection
+#### 🔍 Data Inspection
 •	Counted records to verify table size:
 ```sql
 SELECT COUNT(*) FROM transactions;        -- 150,283
@@ -220,46 +198,23 @@ WHERE da.year = 2020 AND tr.market_code = "Mark001"
 -- Result: 2,463,024
 ```
 ________________________________________
-🧾 Data Formatting
+#### 🧾 Data Formatting
 •	Created a star schema by establishing relationships manually between tables (Data Modeling).
+<br>
 •	Used Power BI's Applied Steps feature in Power Query to track and manage transformation logic.
+<br>
 •	Ensured that formatting and data types were consistent (e.g., cleaned currency field for consistency).
-
-
-
-
-
-
-
-
-
-4. Data Cleaning & Preparation
-Performed the following:
-•	Data Loading from MySQL into Power BI via Power Query.
-•	Data Inspection:
-o	Total transactions: 150,283
-o	Total customers: 38
-o	Chennai (Mark001) Customers: 1035
-o	Currency inconsistencies identified via SQL.
-Cleaning & Transformation Tasks:
-•	Removed transactions where sales_amount <= 0.
-•	Filtered out rows in sales_markets table with blank zone values (e.g., New York, Paris).
-•	Cleaned currency values such as 'INR', 'INR\r', 'USD', and 'USD\r':
-o	Retained standardized formats: INR#(cr) and USD#(cr)
-o	Removed duplicates and misformatted entries.
-•	Created a new column:
-powerquery
-Copy code
-normalise_sales_amount = if [currency] = "USD#(cr)" then [sales_amount]*75 else [sales_amount]
-•	Changed normalise_sales_amount from text to number for proper aggregations.
 
 
 ### 8. Limitations-
 remove or exclude recordes to do analysis
-
+<br>
 •  Data warehouse not implemented; data pulled directly from live OLTP (MySQL), which may affect performance under load.
+<br>
 •  Bad records were removed instead of corrected due to scope and simplicity constraints.
+<br>
 •  Static USD conversion rate used (₹75); dynamic rate API not integrated.
+<br>
 •  Blank product name ?
 
 ### 10.	Data Structure Overview-
@@ -272,29 +227,25 @@ ERD  Entity Relationship Diagram
 
 ### 11. Executive Summary –  summary about main findings (BI)
 
-1
+#### ✅ 1️⃣ Dashboard: Key Insights
 ![Screenshot (127)](https://github.com/user-attachments/assets/b1e9965a-b5ab-425c-b9f5-8e67c9d7b397)
 
-✅ 1️⃣ Dashboard: Key Insights
-<br>
-What this shows:
-
+#### What this shows:
 Total Revenue and Sales Quantity 
-
+<br>
 Revenue by Markets: Breakdown of revenue across different cities/markets, highlighting top performers.
-
+<br>
 Sales Quantity by Markets: Sales volume by city, showing where the highest demand exists.
-
+<br>
 Revenue Trend: Month-by-month trend line, useful for spotting seasonality, growth, or drops.
-
+<br>
 Top Products: Revenue generated by top-selling products. (Note: A large portion appears as “Blank” — may indicate data quality issues to fix.)
-
+<br>
 Top 5 Customers: Major revenue-contributing customers.
-
+<br>
 Year and Month Slicers : To navigate between years and months/ Filter performance by any year and month. Analyze trends during specific periods (e.g., festive seasons).
 
-Key insights & value for sales director :
-<br>
+#### Key insights & value for sales director :
 ✔️ Identify best-performing markets and regions.
 <br>
 ✔️ Recognize which cities are driving the most sales and revenue.
@@ -303,23 +254,19 @@ Key insights & value for sales director :
 <br>
 ✔️ Detect seasonal trends for production and inventory planning.
 
-2
+#### ✅ 2️⃣ Dashboard: Key Insights with Customer Type
 ![Screenshot (128)](https://github.com/user-attachments/assets/619a54f0-ed11-4971-b408-a49a08b71553)
 
-✅ 2️⃣ Dashboard: Key Insights with Customer Type
-<br>
-What this shows:
-
+#### What this shows:
 Same overall metrics — Revenue and Sales Quantity.
-
+<br>
 Split by Customer Type: Clear comparison of Brick & Mortar vs E-Commerce contribution. by ?
-
+<br>
 Revenue & Sales Qty by Markets: Shows which cities are more reliant on offline vs online channels.
-
+<br>
 Revenue by Customer Type (Donut Chart): Overall share of each channel. ?
 
-Key insights & value for sales director:
-<br>
+#### Key insights & value for sales director:
 ✔️ Understand the balance between E-Commerce and traditional retail.
 <br>
 ✔️ Find which cities are strong in E-Commerce — identify new digital opportunities.
@@ -328,25 +275,22 @@ Key insights & value for sales director:
 <br>
 ✔️ Strategize expansion in weaker channels/markets to diversify risk. ?
 
-3
+#### ✅ 3️⃣ Dashboard: Profit Analysis
 ![Screenshot (129)](https://github.com/user-attachments/assets/6060bb99-0d33-45fa-940e-0eeb33f53209)
 
-✅ 3️⃣ Dashboard: Profit Analysis
-<br>
-What this shows:
-
+#### What this shows:
 Total Revenue, Sales Qty, and Total Profit Margin
-
-Revenue Contribution % by Market: Which markets bring the most revenue share.
-
-Profit Contribution % by Market: Which markets contribute most to profit.
-
-Profit Margin % by Market: Actual margin rates for each market — identifies high or low margin zones.
-
-Customer Table: Detailed customer-wise Revenue, Revenue Contribution %, Profit Margin Contribution %, and Profit Margin %.
-
-Key insights & value for sales director:
 <br>
+Revenue Contribution % by Market: Which markets bring the most revenue share.
+<br>
+Profit Contribution % by Market: Which markets contribute most to profit.
+<br>
+Profit Margin % by Market: Actual margin rates for each market — identifies high or low margin zones.
+<br>
+Customer Table: Detailed customer-wise Revenue, Revenue Contribution %, Profit Margin Contribution %, and Profit Margin %.
+<br>
+
+#### Key insights & value for sales director:
 ✔️ Compare revenue contribution with actual profit — revenue leaders may not be profit leaders.
 <br>
 ✔️ Identify low-profit or loss-making markets.
@@ -357,23 +301,19 @@ Key insights & value for sales director:
 <br>
 ✔️ Develop targeted pricing and discounting strategies. ?
 
-4
+#### ✅ 4️⃣ Dashboard: Performance Insights
 
 ![Screenshot (130)](https://github.com/user-attachments/assets/8d2ed905-4f83-4b31-b28a-f7489839579f)
 
-✅ 4️⃣ Dashboard: Performance Insights
-<br>
-What this shows:
-
+#### What this shows:
 Same KPIs — Revenue, Sales Qty, Profit Margin.
-
+<br>
 Adds a Profit Target slicer — lets user adjust target margin and compare.
-
+<br>
 Combined Revenue Trend with Profit Margin %: Visualizes how profit margin aligns with revenue over time. ?
 
 
-Key insights & value for sales director:
-<br>
+#### Key insights & value for sales director:
 ✔️ Track whether profit margins meet targets month by month. ?
 <br>
 ✔️ Visual correlation between revenue growth and margin fluctuation — e.g., high sales might not mean high profit.
