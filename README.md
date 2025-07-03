@@ -6,7 +6,7 @@ https://github.com/VedantKumawat20/BI_SQL_P2_AtilQ/blob/main/BI_Dashboard.pbit
 ### Table of Contents
 [Background and Overview](#1-background-and-overview-)<br>
 [Problem Statement](#2-problem-statement-)<br>
-[AIMS Grid](#3-aims-grid–sales-insights-automation-project-for-atilq-)<br>
+[AIMS Grid](#3-aims-grid–-sales-insights-automation-project-for-atilq-)<br>
 [Project Team & Technical Setup](#4-project-team--technical-setup-)<br>
 [Data Sources](#5-data-sources-)<br>
 [Tools](#6-tools-)<br>
