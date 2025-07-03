@@ -1,7 +1,7 @@
 # BI_SQL_P2_AtilQ
 ### Data Analysis Project 2  (Power BI) (SQL)
 
-
+https://github.com/VedantKumawat20/BI_SQL_P2_AtilQ/blob/main/BI_Dashboard.pbit
 
 ### Table of Contents
 [Background and Overview](#1.Background-and-Overview-)
