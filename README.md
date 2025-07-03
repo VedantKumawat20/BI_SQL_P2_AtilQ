@@ -4,7 +4,16 @@
 https://github.com/VedantKumawat20/BI_SQL_P2_AtilQ/blob/main/BI_Dashboard.pbit
 
 ### Table of Contents
-[Background and Overview](#1.Background-and-Overview-)
+[Background and Overview](#1.Background-and-Overview-)<br>
+[Problem Statement](#2.Problem-Statement-)<br>
+[AIMS Grid](#3.AIMS-Grid–Sales-Insights-Automation-Project-for-AtilQ-)<br>
+[Project Team & Technical Setup](#4.Project-Team-&-Technical-Setup-)<br>
+[Data Sources](#5.Data-Sources-)<br>
+[Tools](#6.Tools-)<br>
+[ELT](#7.ELT-(Extract,-Load,-Transform)-)<br>
+[Data Structure Overview](#8.Data-Structure-Overview-)<br>
+[Limitations](#9.Limitations-)<br>
+[Executive Summary](#10.Executive-Summary–summary-about-main-findings-(BI)-)<br>
 
 ---
 ### 1. Background and Overview- 
@@ -25,13 +34,13 @@ https://github.com/VedantKumawat20/BI_SQL_P2_AtilQ/blob/main/BI_Dashboard.pbit
 The goal of this project is to analyze and synthesizes this data in order to uncover critical insights that will help AtilQ to solve computer hardware manufactruer sales issue.
 
 ---
-### 2. Problem Statement--
+### 2. Problem Statement-
 The company operates in a dynamic and rapidly changing market, with sales teams spread across North, South, and Central India. Currently, the process of obtaining sales insights is inefficient and unreliable. Regional managers provide verbal updates when contacted, which often leads to inconsistent, sugar-coated, or misleading information, preventing leadership from getting a true picture of market performance.
 <br>
 Although sales data is shared in Excel files, they are often large, unstructured, and difficult to interpret, making it challenging for decision-makers to extract clear, actionable insights. As a result, there is a lack of real-time, transparent, and easy-to-understand sales reporting, hindering timely and informed strategic decisions.
 
 ---
-### 3. AIMS Grid – Sales Insights Automation Project for AtilQ--
+### 3. AIMS Grid – Sales Insights Automation Project for AtilQ-
 #### [4 Components]
 - #### Purpose:
 The primary goal of this project is to unlock previously hidden sales insights for the sales team, enabling better and faster decision-making. By automating data consolidation and analysis, the project aims to significantly reduce the manual effort spent on gathering and preparing sales data.
@@ -57,7 +66,7 @@ A fully automated sales dashboard delivering real-time, actionable insights, emp
 ✅ Sales analysts save 20% of their time by eliminating manual data tasks and redirect it to higher-value strategic activities
 
 ---
-### 4. Project Team & Technical Setup--
+### 4. Project Team & Technical Setup-
 
 1. IT Team – "Falcons"
 The IT team, known as Falcons, manages the existing Sales Management System, which includes responsibilities like printing invoices and maintaining the MySQL database that stores all transactional sales data.
@@ -70,49 +79,61 @@ Typically, to prevent BI queries from putting load on the MySQL OLTP (Online Tra
 However, for simplicity and project scope, the existing MySQL database will be used directly, without setting up a separate data warehouse. Data will be accessed from MySQL with caution to ensure the live transactional system remains unaffected.
 
 ---
-### 5. Data Sources--
-(#### Sales Data--  The primary dataset used for this analysis is the "sales_sql.csv" file, containing detailed information about each sale made by the company.)
-#### Transactions Data – (The primary dataset used for this analysis is the "sales_sql.csv" file) Sales transactions including codes, order dates, quantity, amounts, currencies, profit margin %, profit margin and cost price.
+### 5. Data Sources-
+#### Transactions Data –  Contains detailed information about each sale made by the company including codes, order dates, quantity, amounts, currencies, profit margin %, profit margin and cost price.
 #### Customers Data – Customer name with associated market codes and customer type.
 #### Markets Data – Market zone-level information (e.g., market name, code, and region).
 #### Date Table – Used to extract time-based trends (e.g., year, quarter).
 #### Database Source – MySQL (live OLTP data system).
 
 ---
-### 6. Tools--
-•	Power BI – Used for ETL, data modeling, transformation, visualization, and dashboard creation.
+### 6. Tools-
+•	Power BI – Used for ELT, data modeling, transformation, visualization, and dashboard creation.
 <br>
 •	MySQL Workbench – Used to inspect, clean, and validate data before loading into Power BI.
 
 ---
-### 7. Data Cleaning/Preparation--
-#### In the initial data preparation phase, we performed the following tasks:
-- Data loading and inspection.
-- Data cleaning and formating.
-
-
-✅ ETL Project Summary – AtilQ Sales Data Analysis (via Power BI & SQL)
-
-#### 📊 Primary Analysis Goals
-•	Generate automated dashboards with up-to-date insights.
-<br>
-•	Normalize sales across currencies (USD to INR).
-<br>
-•	Enable quick filtering by year, market, and currency.
-<br>
-•	Eliminate duplicate or invalid records for accurate KPIs.
+### 7. ELT (Extract, Load, Transform)-
+The project uses an ELT workflow, where raw data is extracted from a MySQL OLTP source, loaded into Power BI, then transformed inside Power BI (Power Query) for analysis.
+#### we performed the following tasks:
+- Data Loading
+- Data Inspection
+- Data Cleaning
+- Data Formating
+- Data Preparation
+- Data Modeling
 
 #### 📥 Data Loading
-•	Loaded all relevant tables into Power BI using MySQL as the data source.
-<br>
-•	Used Power Query Editor for data transformation and cleaning.
-<br>
-•	Tables include:
-- transactions (150,283 records)
-- customers (38 records)
-- markets (17 records)
-- products (279 records)
-- date (1129 records)
+
+-	Loaded all relevant tables into Power BI using MySQL as the data source.<br>
+-	Used Power Query Editor for data transformation and cleaning.<br>
+- Tables include:<br>
+• transactions (150,283 records)<br>
+• customers (38 records)<br>
+• markets (17 records)<br>
+• products (279 records)<br>
+• date (1129 records)<br>
+
+
+#### 🔍 Data Inspection
+
+- Counted records to verify table size:
+
+```sql
+SELECT COUNT(*) FROM transactions;        -- 150,283
+SELECT COUNT(*) FROM customers;           -- 38
+SELECT COUNT(*) FROM customers WHERE market_code = "Mark001";  -- 1035
+SELECT COUNT(*) FROM transactions WHERE currency = "USD";      -- 2
+```
+
+- Verified sales amount for Chennai (Mark001) in 2020:
+```sql
+SELECT SUM(tr.sales_amount)
+FROM transactions tr
+JOIN sales.date da ON tr.order_date = da.date
+WHERE da.year = 2020 AND tr.market_code = "Mark001"
+-- Result: 2,463,024
+```
 
 #### 🧼 Data Cleaning
 
@@ -181,7 +202,7 @@ FROM transactions tr
 JOIN date da ON tr.order_date = da.date
 ```
 
-- Created custom column (norma_sales_amount) for currency normalization:
+- Created custom column (norm_sales_amount) for currency normalization:
 
 • If currency = USD → multiply sales_amount by 75
 
@@ -191,37 +212,28 @@ JOIN date da ON tr.order_date = da.date
 = Table.AddColumn(#"cleanup currency", "norma_sales_amount", each if [currency] = "USD#(cr)" then [sales_amount]*75 else [sales_amount])
 ```
 
-#### 🔍 Data Inspection
-
-- Counted records to verify table size:
-
-```sql
-SELECT COUNT(*) FROM transactions;        -- 150,283
-SELECT COUNT(*) FROM customers;           -- 38
-SELECT COUNT(*) FROM customers WHERE market_code = "Mark001";  -- 1035
-SELECT COUNT(*) FROM transactions WHERE currency = "USD";      -- 2
-```
-
-- Verified sales amount for Chennai (Mark001) in 2020:
-```sql
-SELECT SUM(tr.sales_amount)
-FROM transactions tr
-JOIN sales.date da ON tr.order_date = da.date
-WHERE da.year = 2020 AND tr.market_code = "Mark001"
--- Result: 2,463,024
-```
-
 #### 🧾 Data Formatting
 
-•	Created a star schema by establishing relationships manually between tables (Data Modeling).
+•	Ensured that formatting and data types were consistent (e.g., cleaned currency field for consistency).
 <br>
 •	Used Power BI's Applied Steps feature in Power Query to track and manage transformation logic.
-<br>
-•	Ensured that formatting and data types were consistent (e.g., cleaned currency field for consistency).
+
+#### 🔗 Data Modeling
+
+•	Created a star schema by establishing relationships manually between tables
 
 ---
-### 8. Limitations--
-remove or exclude recordes to do analysis
+### 8.	Data Structure Overview-
+ERD  Entity Relationship Diagram
+<br>
+Data Structure as seen below consists of four tables: transactions, customers, products, markets, and date.
+![Screenshot (119)](https://github.com/user-attachments/assets/4504fea6-31ba-4053-b256-152bb77e8438)
+
+(Prior to begnning the analysis, a variety of checks were conducted for quality control and famaliarization with the dataset. The SQL quaries utilized to instep and perform quality check)
+
+---
+### 9. Limitations-
+[remove or exclude recordes to do analysis]
 <br>
 •  Data warehouse not implemented; data pulled directly from live OLTP (MySQL), which may affect performance under load.
 <br>
@@ -229,25 +241,16 @@ remove or exclude recordes to do analysis
 <br>
 •  Static USD conversion rate used (₹75); dynamic rate API not integrated.
 <br>
-•  Blank product name ?
+• The dataset contains a product named `(blank)` due to a source data issue. In a real project, this would be resolved with the relevant department. For simplicity, the original data is unchanged and not manually corrected. It may slightly affect aggregate insights, category-level analyses, or visualizations where product names are displayed.
 
 ---
-### 9.	Data Structure Overview--
-ERD  Entity Relationship Diagram
-<br>
- data structure as seen below consists of four tables: sales, customers, products, and city with a total row count of …
-![Screenshot (119)](https://github.com/user-attachments/assets/4504fea6-31ba-4053-b256-152bb77e8438)
-
-(Prior to begnning the analysis, a variety of checks were conducted for quality control and famaliarization with the dataset. The SQL quaries utilized to instep and perform quality check can be found here.)
-
----
-### 10. Executive Summary –-  summary about main findings (BI)
+### 10. Executive Summary – summary about main findings (BI)
 
 #### ✅ 1️⃣ Dashboard: Key Insights
 ![Screenshot (127)](https://github.com/user-attachments/assets/b1e9965a-b5ab-425c-b9f5-8e67c9d7b397)
 
 #### What this shows:
-• Total Revenue and Sales Quantity 
+• Card Visual: Total Revenue and Sales Quantity 
 <br>
 • Revenue by Markets: Breakdown of revenue across different cities/markets, highlighting top performers.
 <br>
@@ -255,7 +258,7 @@ ERD  Entity Relationship Diagram
 <br>
 • Revenue Trend: Month-by-month trend line, useful for spotting seasonality, growth, or drops.
 <br>
-• Top Products: Revenue generated by top-selling products. (Note: A large portion appears as “Blank” — may indicate data quality issues to fix.)
+• Top Products: Revenue generated by top-selling products.
 <br>
 • Top 5 Customers: Major revenue-contributing customers.
 <br>
@@ -276,11 +279,9 @@ ERD  Entity Relationship Diagram
 #### What this shows:
 • Same overall metrics — Revenue and Sales Quantity.
 <br>
-• Split by Customer Type: Clear comparison of Brick & Mortar vs E-Commerce contribution. by ?
+• Split by Customer Type: Clear comparison of Brick & Mortar vs E-Commerce contribution.
 <br>
-• Revenue & Sales Qty by Markets: Shows which cities are more reliant on offline vs online channels.
-<br>
-• Revenue by Customer Type (Donut Chart): Overall share of each channel. ?
+• Revenue by Customer Type (Donut Chart): Overall share of each channel.
 
 #### Key insights & value for sales director:
 ✔️ Understand the balance between E-Commerce and traditional retail.
@@ -289,7 +290,7 @@ ERD  Entity Relationship Diagram
 <br>
 ✔️ Optimize marketing spend by channel and region.
 <br>
-✔️ Strategize expansion in weaker channels/markets to diversify risk. ?
+✔️ Strategize expansion in weaker channels/markets to diversify risk.
 
 #### ✅ 3️⃣ Dashboard: Profit Analysis
 ![Screenshot (129)](https://github.com/user-attachments/assets/6060bb99-0d33-45fa-940e-0eeb33f53209)
@@ -314,7 +315,7 @@ ERD  Entity Relationship Diagram
 <br>
 ✔️ Take action to improve margins: renegotiate with low-margin customers or reduce operational costs.
 <br>
-✔️ Develop targeted pricing and discounting strategies. ?
+✔️ Develop targeted pricing and discounting strategies.
 
 #### ✅ 4️⃣ Dashboard: Performance Insights
 
@@ -325,18 +326,18 @@ ERD  Entity Relationship Diagram
 <br>
 • Adds a Profit Target slicer — lets user adjust target margin and compare.
 <br>
-• Combined Revenue Trend with Profit Margin %: Visualizes how profit margin aligns with revenue over time. ?
+• Combined Revenue Trend with Profit Margin %: Visualizes how profit margin aligns with revenue over time.
 
 #### Key insights & value for sales director:
-✔️ Track whether profit margins meet targets month by month. ?
+✔️ Track whether profit margins meet targets month by month.
 <br>
 ✔️ Visual correlation between revenue growth and margin fluctuation — e.g., high sales might not mean high profit.
 <br>
 ✔️ Prioritize high-margin regions while improving or exiting poor-performing zones.
 <br>
-✔️ Use the profit target slider for scenario planning — test “what if” for better planning. ?
+✔️ Use the profit target slider for scenario planning — test “what if” for better planning. 
 <br>
-✔️ Help leadership make informed decisions about pricing, promotions, and market focus. ?
+✔️ Support leadership in making informed decisions about pricing, promotions, and market focus.
 
 
 
