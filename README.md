@@ -13,7 +13,8 @@ https://github.com/VedantKumawat20/BI_SQL_P2_AtilQ/blob/main/BI_Dashboard.pbit
 [ELT](#7-elt-extract-load-transform-)<br>
 [Data Structure Overview](#8-data-structure-overview-)<br>
 [Limitations](#9-limitations-)<br>
-[Executive Summary](#10-executive-summary--summary-about-main-findings-bi-)<br> ### 10. Executive Summary – summary about main findings (BI)
+[Executive Summary](#10-executive-summary--summary-about-main-findings-bi-)<br>
+
 
 ---
 ### 1. Background and Overview- 
@@ -244,7 +245,7 @@ Data Structure as seen below consists of four tables: transactions, customers, p
 • The dataset contains a product named `(blank)` due to a source data issue. In a real project, this would be resolved with the relevant department. For simplicity, the original data is unchanged and not manually corrected. It may slightly affect aggregate insights, category-level analyses, or visualizations where product names are displayed.
 
 ---
-### 10. Executive Summary – summary about main findings (BI)
+### 10. Executive Summary – summary about main findings (BI)-
 
 #### ✅ 1️⃣ Dashboard: Key Insights
 ![Screenshot (127)](https://github.com/user-attachments/assets/b1e9965a-b5ab-425c-b9f5-8e67c9d7b397)
