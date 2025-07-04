@@ -1,13 +1,12 @@
 # BI_SQL_P2_AtilQ
 ### Data Analysis Project 2  (Power BI) (SQL)
 
-https://github.com/VedantKumawat20/BI_SQL_P2_AtilQ/blob/main/BI_Dashboard.pbit
 [**Click here to download the Power BI Template (.pbit)**](https://github.com/VedantKumawat20/BI_SQL_P2_AtilQ/blob/main/BI_Dashboard.pbit)
 
 ### Table of Contents
 [Background and Overview](#1-background-and-overview-)<br>
 [Problem Statement](#2-problem-statement-)<br>
-[AIMS Grid](#3-aims-grid–-sales-insights-automation-project-for-atilq-)<br>
+[AIMS Grid](#3-aims-grid-)<br>
 [Project Team & Technical Setup](#4-project-team--technical-setup-)<br>
 [Data Sources](#5-data-sources-)<br>
 [Tools](#6-tools-)<br>
@@ -42,7 +41,7 @@ The company operates in a dynamic and rapidly changing market, with sales teams 
 Although sales data is shared in Excel files, they are often large, unstructured, and difficult to interpret, making it challenging for decision-makers to extract clear, actionable insights. As a result, there is a lack of real-time, transparent, and easy-to-understand sales reporting, hindering timely and informed strategic decisions.
 
 ---
-### 3. AIMS Grid – Sales Insights Automation Project for AtilQ-
+### 3. AIMS Grid-
 #### [4 Components]
 - #### Purpose:
 The primary goal of this project is to unlock previously hidden sales insights for the sales team, enabling better and faster decision-making. By automating data consolidation and analysis, the project aims to significantly reduce the manual effort spent on gathering and preparing sales data.
